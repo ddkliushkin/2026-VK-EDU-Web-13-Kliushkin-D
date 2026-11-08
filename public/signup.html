@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация — Voprosik</title>
+    <link rel="icon" type="image/svg+xml" href="static/img/favicon.svg">
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+
+    <header class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-2">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-4 me-4" href="index.html">Voprosik</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Переключить навигацию">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse gap-3 mt-2 mt-lg-0" id="navbarContent">
+                <form class="d-flex flex-grow-1 my-2 my-lg-0" role="search" action="index.html" method="get">
+                    <input class="form-control me-2" type="search" placeholder="Поиск по вопросам и тегам..." aria-label="Search">
+                    <button class="btn btn-outline-light me-2" type="submit">Найти</button>
+                    <a href="ask.html" class="btn btn-success text-nowrap">Задать вопрос</a>
+                </form>
+
+                <div class="d-flex align-items-center gap-2 ms-lg-3 py-2 py-lg-0">
+                    <a href="login.html" class="btn btn-outline-info btn-sm">Войти</a>
+                    <a href="signup.html" class="btn btn-primary btn-sm">Регистрация</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container my-4">
+        <div class="row g-4">
+            <div class="col-12 col-lg-8">
+                <div class="card shadow-sm">
+                    <div class="card-body p-4">
+                        <h1 class="h3 mb-4">Регистрация нового пользователя</h1>
+
+                        <div class="alert alert-danger" role="alert">
+                            Пожалуйста, исправьте ошибки в форме регистрации перед отправкой.
+                        </div>
+
+                        <form action="index.html" method="post" enctype="multipart/form-data" novalidate style="max-width: 600px;">
+                            <div class="row mb-3">
+                                <label for="regLogin" class="col-sm-4 col-form-label fw-semibold">Логин</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control is-invalid" id="regLogin" maxlength="32" required>
+                                    <div class="invalid-feedback">Пользователь с таким логином уже зарегистрирован.</div>
+                                    <div class="form-text">От 3 до 32 символов (латинские буквы, цифры и символ подчеркивания).</div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label for="regEmail" class="col-sm-4 col-form-label fw-semibold">Email</label>
+                                <div class="col-sm-8">
+                                    <input type="email" class="form-control is-invalid" id="regEmail" maxlength="100" required>
+                                    <div class="invalid-feedback">Вы ввели невалидный email (пример: user@example.com).</div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label for="regNick" class="col-sm-4 col-form-label fw-semibold">Отображаемое имя</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="regNick" maxlength="50" placeholder="Как вас будут видеть другие участники" required>
+                                    <div class="form-text">До 50 символов.</div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label for="regPass" class="col-sm-4 col-form-label fw-semibold">Пароль</label>
+                                <div class="col-sm-8">
+                                    <input type="password" class="form-control" id="regPass" minlength="8" maxlength="64" placeholder="Минимум 8 символов" required>
+                                    <div class="form-text">Используйте не менее 8 символов, включая буквы и цифры.</div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label for="regPassConfirm" class="col-sm-4 col-form-label fw-semibold">Повторите пароль</label>
+                                <div class="col-sm-8">
+                                    <input type="password" class="form-control is-invalid" id="regPassConfirm" minlength="8" maxlength="64" placeholder="Повторите введенный пароль" required>
+                                    <div class="invalid-feedback">Введенные пароли не совпадают.</div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-4">
+                                <label for="regAvatar" class="col-sm-4 col-form-label fw-semibold">Аватар</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" type="file" id="regAvatar" accept="image/png, image/jpeg, image/webp">
+                                    <div class="form-text">Поддерживаются форматы JPG, PNG, WebP размером до 2 МБ.</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-8 offset-sm-4 d-flex flex-column gap-3">
+                                    <div>
+                                        <button type="submit" class="btn btn-primary px-4">Зарегистрироваться</button>
+                                    </div>
+                                    <div>
+                                        <span class="text-muted small">Уже зарегистрированы?</span>
+                                        <a href="login.html" class="small fw-semibold text-decoration-none ms-1">Войти в аккаунт</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="col-12 col-lg-4">
+                <div class="p-3 bg-white border rounded-3 shadow-sm mb-4">
+                    <h2 class="h5 mb-3">Популярные теги</h2>
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="index.html?tag=#поиск_ошибки" class="badge text-bg-primary text-decoration-none fs-6">#поиск_ошибки</a>
+                        <a href="index.html?tag=#теория" class="badge text-bg-success text-decoration-none fs-6">#теория</a>
+                        <a href="index.html?tag=#оффтоп" class="badge text-bg-danger text-decoration-none fs-6">#оффтоп</a>
+                        <a href="index.html?tag=#что_поиграть" class="badge text-bg-warning text-decoration-none fs-6">#что_поиграть</a>
+                        <a href="index.html?tag=#железо" class="badge text-bg-info text-decoration-none fs-6">#железо</a>
+                        <a href="index.html?tag=#лайфхак" class="badge text-bg-secondary text-decoration-none fs-6">#лайфхак</a>
+                        <a href="index.html?tag=#алгоритмы" class="badge text-bg-dark text-decoration-none fs-6">#алгоритмы</a>
+                        <a href="index.html?tag=#история" class="badge text-bg-light border text-dark text-decoration-none fs-6">#история</a>
+                    </div>
+                </div>
+
+                <div class="p-3 bg-white border rounded-3 shadow-sm">
+                    <h2 class="h5 mb-3">Лучшие участники</h2>
+                    <ul class="list-unstyled mb-0 d-flex flex-column gap-2">
+                        <li><a href="profile.html" class="text-decoration-none">XenoBlast</a></li>
+                        <li><a href="profile.html" class="text-decoration-none">CyberMantis</a></li>
+                        <li><a href="profile.html" class="text-decoration-none">SilverKite</a></li>
+                        <li><a href="profile.html" class="text-decoration-none">NeonVanguard</a></li>
+                        <li><a href="profile.html" class="text-decoration-none">EchoDrifter</a></li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <footer class="bg-dark text-secondary py-3 mt-auto border-top">
+        <div class="container d-flex flex-column flex-sm-row justify-content-between align-items-center small">
+            <span>&copy; 2026 Voprosik — Учебный проект VK Education</span>
+            <div class="d-flex gap-3 mt-2 mt-sm-0">
+                <a href="index.html" class="text-secondary text-decoration-none">Главная</a>
+                <a href="ask.html" class="text-secondary text-decoration-none">Задать вопрос</a>
+                <a href="profile.html" class="text-secondary text-decoration-none">Профиль</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="static/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
