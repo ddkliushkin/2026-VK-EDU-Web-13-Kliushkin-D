@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorem ipsum dolor sit amet, consectetur adipiscing elit? — Voprosik</title>
+    <link rel="icon" type="image/svg+xml" href="static/img/favicon.svg">
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+
+    <header class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-2">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-4 me-4" href="index.html">Voprosik</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Переключить навигацию">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse gap-3 mt-2 mt-lg-0" id="navbarContent">
+                <form class="d-flex flex-grow-1 my-2 my-lg-0" role="search" action="index.html" method="get">
+                    <input class="form-control me-2" type="search" placeholder="Поиск по вопросам и тегам..." aria-label="Search">
+                    <button class="btn btn-outline-light me-2" type="submit">Найти</button>
+                    <a href="ask.html" class="btn btn-success text-nowrap">Задать вопрос</a>
+                </form>
+
+                <div class="d-flex align-items-center gap-2 ms-lg-3 py-2 py-lg-0">
+                    <a href="login.html" class="btn btn-outline-info btn-sm">Войти</a>
+                    <a href="signup.html" class="btn btn-primary btn-sm">Регистрация</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container my-4">
+        <div class="row g-4">
+            <div class="col-12 col-lg-8">
+
+                <article class="card mb-4 border-primary shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="row g-3">
+                            <div class="col-12 col-sm-auto d-flex flex-sm-column align-items-center justify-content-between justify-content-sm-start gap-2 vote-box">
+                                <img src="static/img/avatar.svg" alt="Аватар автора вопроса" class="avatar-lg border">
+                                <div class="btn-group btn-group-sm" role="group" aria-label="Рейтинг вопроса">
+                                    <button type="button" class="btn btn-success active" title="Нравится">+</button>
+                                    <span class="btn btn-light border disabled fw-bold text-success">+15</span>
+                                    <button type="button" class="btn btn-outline-secondary" title="Не нравится">−</button>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm">
+                                <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-2">
+                                    <h1 class="h4 mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit?</h1>
+                                    <span class="text-muted small text-nowrap">Создан: 10 минут назад</span>
+                                </div>
+                                <p class="card-text mb-3">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                </p>
+                                <p class="card-text mb-3">
+                                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                </p>
+                                <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 pt-2 border-top">
+                                    <span class="fw-semibold text-secondary">Всего ответов: 3</span>
+                                    <div class="d-flex flex-wrap align-items-center gap-1">
+                                        <span class="text-muted small me-1">Теги:</span>
+                                        <a href="index.html?tag=#поиск_ошибки" class="badge text-bg-secondary text-decoration-none">#поиск_ошибки</a>
+                                        <a href="index.html?tag=#теория" class="badge text-bg-secondary text-decoration-none">#теория</a>
+                                        <a href="index.html?tag=#оффтоп" class="badge text-bg-secondary text-decoration-none">#оффтоп</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <h2 class="h5 mb-3" id="answers">Ответы (3)</h2>
+
+                <article class="card answer-card answer-correct mb-3 shadow-sm">
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-12 col-sm-auto d-flex flex-sm-column align-items-center justify-content-between justify-content-sm-start gap-2 vote-box">
+                                <img src="static/img/avatar.svg" alt="Аватар автора ответа" class="avatar-lg border">
+                                <div class="btn-group btn-group-sm" role="group" aria-label="Рейтинг ответа">
+                                    <button type="button" class="btn btn-success active" title="Нравится">+</button>
+                                    <span class="btn btn-light border disabled fw-bold text-success">+9</span>
+                                    <button type="button" class="btn btn-outline-secondary" title="Не нравится">−</button>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm">
+                                <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
+                                    <span class="badge text-bg-success">✓ Правильный ответ</span>
+                                    <span class="text-muted small">Ответил: 7 минут назад</span>
+                                </div>
+                                <p class="card-text mb-3">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                </p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="correctAnswer1" checked>
+                                    <label class="form-check-label fw-semibold text-success" for="correctAnswer1">
+                                        Отмечено как правильное решение
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="card answer-card mb-3 shadow-sm">
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-12 col-sm-auto d-flex flex-sm-column align-items-center justify-content-between justify-content-sm-start gap-2 vote-box">
+                                <img src="static/img/avatar.svg" alt="Аватар автора ответа" class="avatar-lg border">
+                                <div class="btn-group btn-group-sm" role="group" aria-label="Рейтинг ответа">
+                                    <button type="button" class="btn btn-outline-secondary" title="Нравится">+</button>
+                                    <span class="btn btn-light border disabled fw-bold text-dark">2</span>
+                                    <button type="button" class="btn btn-outline-secondary" title="Не нравится">−</button>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm">
+                                <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
+                                    <span class="text-muted small fw-semibold">Linus Torvalds</span>
+                                    <span class="text-muted small">Ответил: 3 минуты назад</span>
+                                </div>
+                                <p class="card-text mb-3">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                </p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="correctAnswer2">
+                                    <label class="form-check-label text-secondary" for="correctAnswer2">
+                                        Отметить ответ как правильный
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <nav aria-label="Постраничная навигация по ответам" class="mb-4">
+                    <ul class="pagination pagination-sm flex-wrap mb-0">
+                        <li class="page-item disabled"><span class="page-link">Назад</span></li>
+                        <li class="page-item active" aria-current="page"><span class="page-link">1</span></li>
+                        <li class="page-item"><a class="page-link" href="question.html?page=2#answers">2</a></li>
+                        <li class="page-item"><a class="page-link" href="question.html?page=3#answers">3</a></li>
+                        <li class="page-item"><a class="page-link" href="question.html?page=2#answers">Вперед</a></li>
+                    </ul>
+                </nav>
+
+                <hr class="my-4">
+
+                <section class="card shadow-sm">
+                    <div class="card-body p-4">
+                        <h3 class="h5 mb-3">Ваш ответ</h3>
+                        <form action="question.html" method="post" novalidate>
+                            <div class="mb-3">
+                                <label for="answerText" class="form-label visually-hidden">Текст ответа</label>
+                                <textarea class="form-control" id="answerText" rows="5" maxlength="5000" placeholder="Напишите подробный и развернутый ответ на вопрос..." required></textarea>
+                                <div class="form-text">Поддерживается форматирование кода. Максимальная длина ответа — 5000 символов.</div>
+                            </div>
+                            <button type="submit" class="btn btn-primary px-4">Отправить ответ</button>
+                        </form>
+                    </div>
+                </section>
+
+            </div>
+
+            <aside class="col-12 col-lg-4">
+                <div class="p-3 bg-white border rounded-3 shadow-sm mb-4">
+                    <h2 class="h5 mb-3">Популярные теги</h2>
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="index.html?tag=#поиск_ошибки" class="badge text-bg-primary text-decoration-none fs-6">#поиск_ошибки</a>
+                        <a href="index.html?tag=#теория" class="badge text-bg-success text-decoration-none fs-6">#теория</a>
+                        <a href="index.html?tag=#оффтоп" class="badge text-bg-danger text-decoration-none fs-6">#оффтоп</a>
+                        <a href="index.html?tag=#что_поиграть" class="badge text-bg-warning text-decoration-none fs-6">#что_поиграть</a>
+                        <a href="index.html?tag=#железо" class="badge text-bg-info text-decoration-none fs-6">#железо</a>
+                        <a href="index.html?tag=#лайфхак" class="badge text-bg-secondary text-decoration-none fs-6">#лайфхак</a>
+                        <a href="index.html?tag=#алгоритмы" class="badge text-bg-dark text-decoration-none fs-6">#алгоритмы</a>
+                        <a href="index.html?tag=#история" class="badge text-bg-light border text-dark text-decoration-none fs-6">#история</a>
+                    </div>
+                </div>
+
+                <div class="p-3 bg-white border rounded-3 shadow-sm">
+                    <h2 class="h5 mb-3">Лучшие участники</h2>
+                    <ul class="list-unstyled mb-0 d-flex flex-column gap-2">
+                        <li><a href="profile.html" class="text-decoration-none">XenoBlast</a></li>
+                        <li><a href="profile.html" class="text-decoration-none">CyberMantis</a></li>
+                        <li><a href="profile.html" class="text-decoration-none">SilverKite</a></li>
+                        <li><a href="profile.html" class="text-decoration-none">NeonVanguard</a></li>
+                        <li><a href="profile.html" class="text-decoration-none">EchoDrifter</a></li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <footer class="bg-dark text-secondary py-3 mt-auto border-top">
+        <div class="container d-flex flex-column flex-sm-row justify-content-between align-items-center small">
+            <span>&copy; 2026 Voprosik — Учебный проект VK Education</span>
+            <div class="d-flex gap-3 mt-2 mt-sm-0">
+                <a href="index.html" class="text-secondary text-decoration-none">Главная</a>
+                <a href="ask.html" class="text-secondary text-decoration-none">Задать вопрос</a>
+                <a href="profile.html" class="text-secondary text-decoration-none">Профиль</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="static/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
