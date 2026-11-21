@@ -3,7 +3,11 @@
     <div class="card-body">
         <div class="row g-3">
             <div class="col-12 col-sm-auto d-flex flex-sm-column align-items-center justify-content-between justify-content-sm-start gap-2 vote-box">
-                <img src="{% static 'core/img/avatar.svg' %}" alt="Аватар автора ответа" class="avatar-lg border">
+                {% if answer.author.profile.avatar %}
+                    <img src="{{ answer.author.profile.avatar.url }}" alt="Аватар {{ answer.author.username }}" class="avatar-lg border">
+                {% else %}
+                    <img src="{% static 'core/img/avatar.svg' %}" alt="Аватар {{ answer.author.username }}" class="avatar-lg border">
+                {% endif %}
                 <div class="btn-group btn-group-sm" role="group" aria-label="Рейтинг ответа">
                     <button type="button" class="btn {% if answer.is_correct %}btn-success active{% else %}btn-outline-secondary{% endif %}" title="Нравится">+</button>
                     <span class="btn btn-light border disabled fw-bold {% if answer.is_correct %}text-success{% else %}text-dark{% endif %}">{{ answer.rating }}</span>
@@ -15,9 +19,9 @@
                     {% if answer.is_correct %}
                         <span class="badge text-bg-success">✓ Правильный ответ</span>
                     {% else %}
-                        <span class="text-muted small fw-semibold">{{ answer.author }}</span>
+                        <span class="text-muted small fw-semibold">{{ answer.author.username }}</span>
                     {% endif %}
-                    <span class="text-muted small">Ответил: {{ answer.created_at }}</span>
+                    <span class="text-muted small">Ответил: {{ answer.created_at|date:"d.m.Y H:i" }}</span>
                 </div>
                 <p class="card-text mb-3">{{ answer.text }}</p>
                 <div class="form-check">

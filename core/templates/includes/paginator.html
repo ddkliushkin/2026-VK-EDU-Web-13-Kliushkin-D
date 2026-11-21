@@ -9,8 +9,10 @@
             <li class="page-item disabled"><span class="page-link">Назад</span></li>
         {% endif %}
 
-        {% for num in page_obj.paginator.page_range %}
-            {% if page_obj.number == num %}
+        {% for num in page_obj.paginator.get_elided_page_range %}
+            {% if num == page_obj.paginator.ELLIPSIS %}
+                <li class="page-item disabled"><span class="page-link">…</span></li>
+            {% elif page_obj.number == num %}
                 <li class="page-item active" aria-current="page">
                     <span class="page-link">{{ num }}</span>
                 </li>
