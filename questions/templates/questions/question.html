@@ -8,7 +8,11 @@
     <div class="card-body p-4">
         <div class="row g-3">
             <div class="col-12 col-sm-auto d-flex flex-sm-column align-items-center justify-content-between justify-content-sm-start gap-2 vote-box">
-                <img src="{% static 'core/img/avatar.svg' %}" alt="Аватар автора вопроса" class="avatar-lg border">
+                {% if question.author.profile.avatar %}
+                    <img src="{{ question.author.profile.avatar.url }}" alt="Аватар {{ question.author.username }}" class="avatar-lg border">
+                {% else %}
+                    <img src="{% static 'core/img/avatar.svg' %}" alt="Аватар {{ question.author.username }}" class="avatar-lg border">
+                {% endif %}
                 <div class="btn-group btn-group-sm" role="group" aria-label="Рейтинг вопроса">
                     <button type="button" class="btn btn-success active" title="Нравится">+</button>
                     <span class="btn btn-light border disabled fw-bold text-success">{{ question.rating }}</span>
@@ -18,15 +22,17 @@
             <div class="col-12 col-sm">
                 <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-2">
                     <h1 class="h4 mb-0">{{ question.title }}</h1>
-                    <span class="text-muted small text-nowrap">Создан: {{ question.created_at }}</span>
+                    <span class="text-muted small text-nowrap">Создан: {{ question.created_at|date:"d.m.Y H:i" }}</span>
                 </div>
                 <p class="card-text mb-3">{{ question.text }}</p>
                 <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 pt-2 border-top">
                     <span class="fw-semibold text-secondary">Всего ответов: {{ page_obj.paginator.count }}</span>
                     <div class="d-flex flex-wrap align-items-center gap-1">
                         <span class="text-muted small me-1">Теги:</span>
-                        {% for t in question.tags %}
-                            <a href="{% url 'tag' t %}" class="badge text-bg-secondary text-decoration-none">#{{ t }}</a>
+                        {% for t in question.tags.all %}
+                            <a href="{{ t.get_absolute_url }}" class="badge text-bg-secondary text-decoration-none">#{{ t.name }}</a>
+                        {% empty %}
+                            <span class="text-muted small">нет</span>
                         {% endfor %}
                     </div>
                 </div>
@@ -40,7 +46,7 @@
 {% for answer in page_obj %}
     {% include 'includes/answer_card.html' %}
 {% empty %}
-    <div class="alert alert-info">Ответов пока нет.</div>
+    <div class="alert alert-info">Пока нет ни одного ответа к этому вопросу.</div>
 {% endfor %}
 
 {% include 'includes/paginator.html' %}
@@ -50,7 +56,7 @@
 <section class="card shadow-sm">
     <div class="card-body p-4">
         <h3 class="h5 mb-3">Ваш ответ</h3>
-        <form action="{% url 'question' question.id %}" method="post" novalidate>
+        <form action="{{ question.get_absolute_url }}" method="post" novalidate>
             {% csrf_token %}
             <div class="mb-3">
                 <label for="answerText" class="form-label visually-hidden">Текст ответа</label>

@@ -11,7 +11,7 @@
 {% for question in page_obj %}
     {% include 'includes/question_card.html' %}
 {% empty %}
-    <div class="alert alert-info">Вопросов пока нет.</div>
+    <div class="alert alert-info">Пока нет ни одного вопроса.</div>
 {% endfor %}
 
 {% include 'includes/paginator.html' %}
