@@ -13,10 +13,18 @@
                 {% else %}
                     <img src="{% static 'core/img/avatar.svg' %}" alt="Аватар {{ question.author.username }}" class="avatar-lg border">
                 {% endif %}
-                <div class="btn-group btn-group-sm" role="group" aria-label="Рейтинг вопроса">
-                    <button type="button" class="btn btn-success active" title="Нравится">+</button>
-                    <span class="btn btn-light border disabled fw-bold text-success">{{ question.rating }}</span>
-                    <button type="button" class="btn btn-outline-secondary" title="Не нравится">−</button>
+                <div class="btn-group btn-group-sm vote-controls" data-url="{% url 'vote_question' question.id %}" role="group" aria-label="Рейтинг вопроса">
+                    <button type="button"
+                            class="btn vote-btn {% if question.user_vote == 1 %}btn-success active{% else %}btn-outline-secondary{% endif %}"
+                            data-vote="like"
+                            {% if not user.is_authenticated %}disabled title="Войдите, чтобы голосовать"{% elif question.user_vote == 1 %}title="Убрать лайк"{% else %}title="Нравится"{% endif %}>+</button>
+                    <span class="btn btn-light border disabled fw-bold vote-rating {% if question.rating > 0 %}text-success{% elif question.rating < 0 %}text-danger{% else %}text-dark{% endif %}">
+                        {{ question.rating }}
+                    </span>
+                    <button type="button"
+                            class="btn vote-btn {% if question.user_vote == -1 %}btn-danger active{% else %}btn-outline-secondary{% endif %}"
+                            data-vote="dislike"
+                            {% if not user.is_authenticated %}disabled title="Войдите, чтобы голосовать"{% elif question.user_vote == -1 %}title="Убрать дизлайк"{% else %}title="Не нравится"{% endif %}>−</button>
                 </div>
             </div>
             <div class="col-12 col-sm">
@@ -56,15 +64,29 @@
 <section class="card shadow-sm">
     <div class="card-body p-4">
         <h3 class="h5 mb-3">Ваш ответ</h3>
-        <form action="{{ question.get_absolute_url }}" method="post" novalidate>
-            {% csrf_token %}
+
+        {% if user.is_authenticated %}
+            <form action="{{ question.get_absolute_url }}" method="post" novalidate>
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="{{ form.text.id_for_label }}" class="form-label visually-hidden">Текст ответа</label>
+                    {{ form.text }}
+                    {% for error in form.text.errors %}
+                        <div class="text-danger small mt-1">{{ error }}</div>
+                    {% endfor %}
+                    <div class="form-text">Минимум 5 символов, максимум 5000 символов.</div>
+                </div>
+                <button type="submit" class="btn btn-primary px-4">Отправить ответ</button>
+            </form>
+        {% else %}
             <div class="mb-3">
-                <label for="answerText" class="form-label visually-hidden">Текст ответа</label>
-                <textarea class="form-control" id="answerText" rows="5" maxlength="5000" placeholder="Напишите подробный и развернутый ответ на вопрос..." required></textarea>
-                <div class="form-text">Поддерживается форматирование кода. Максимальная длина ответа — 5000 символов.</div>
+                <textarea class="form-control" rows="4" disabled title="Войдите, чтобы оставить ответ" placeholder="Войдите в аккаунт, чтобы написать ответ..."></textarea>
             </div>
-            <button type="submit" class="btn btn-primary px-4">Отправить ответ</button>
-        </form>
+            <div class="d-flex align-items-center gap-3">
+                <button type="button" class="btn btn-primary px-4" disabled title="Войдите, чтобы оставить ответ">Отправить ответ</button>
+                <a href="{% url 'login' %}?next={{ request.get_full_path|urlencode }}" class="small fw-semibold text-decoration-none">Войти в аккаунт</a>
+            </div>
+        {% endif %}
     </div>
 </section>
 {% endblock %}

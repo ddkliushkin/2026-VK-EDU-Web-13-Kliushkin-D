@@ -8,12 +8,18 @@
                 {% else %}
                     <img src="{% static 'core/img/avatar.svg' %}" alt="Аватар {{ question.author.username }}" class="avatar-lg border">
                 {% endif %}
-                <div class="btn-group btn-group-sm" role="group" aria-label="Рейтинг вопроса">
-                    <button type="button" class="btn {% if question.rating > 10 %}btn-success active{% else %}btn-outline-secondary{% endif %}" title="Нравится">+</button>
-                    <span class="btn btn-light border disabled fw-bold {% if question.rating > 10 %}text-success{% elif question.rating < 0 %}text-danger{% else %}text-dark{% endif %}">
+                <div class="btn-group btn-group-sm vote-controls" data-url="{% url 'vote_question' question.id %}" role="group" aria-label="Рейтинг вопроса">
+                    <button type="button"
+                            class="btn vote-btn {% if question.user_vote == 1 %}btn-success active{% else %}btn-outline-secondary{% endif %}"
+                            data-vote="like"
+                            {% if not user.is_authenticated %}disabled title="Войдите, чтобы голосовать"{% elif question.user_vote == 1 %}title="Убрать лайк"{% else %}title="Нравится"{% endif %}>+</button>
+                    <span class="btn btn-light border disabled fw-bold vote-rating {% if question.rating > 0 %}text-success{% elif question.rating < 0 %}text-danger{% else %}text-dark{% endif %}">
                         {{ question.rating }}
                     </span>
-                    <button type="button" class="btn {% if question.rating < 0 %}btn-danger active{% else %}btn-outline-secondary{% endif %}" title="Не нравится">−</button>
+                    <button type="button"
+                            class="btn vote-btn {% if question.user_vote == -1 %}btn-danger active{% else %}btn-outline-secondary{% endif %}"
+                            data-vote="dislike"
+                            {% if not user.is_authenticated %}disabled title="Войдите, чтобы голосовать"{% elif question.user_vote == -1 %}title="Убрать дизлайк"{% else %}title="Не нравится"{% endif %}>−</button>
                 </div>
             </div>
             <div class="col-12 col-sm">
