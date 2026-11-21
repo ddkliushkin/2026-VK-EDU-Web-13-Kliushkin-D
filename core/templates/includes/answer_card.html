@@ -1,0 +1,32 @@
+{% load static %}
+<article class="card answer-card {% if answer.is_correct %}answer-correct{% endif %} mb-3 shadow-sm">
+    <div class="card-body">
+        <div class="row g-3">
+            <div class="col-12 col-sm-auto d-flex flex-sm-column align-items-center justify-content-between justify-content-sm-start gap-2 vote-box">
+                <img src="{% static 'core/img/avatar.svg' %}" alt="Аватар автора ответа" class="avatar-lg border">
+                <div class="btn-group btn-group-sm" role="group" aria-label="Рейтинг ответа">
+                    <button type="button" class="btn {% if answer.is_correct %}btn-success active{% else %}btn-outline-secondary{% endif %}" title="Нравится">+</button>
+                    <span class="btn btn-light border disabled fw-bold {% if answer.is_correct %}text-success{% else %}text-dark{% endif %}">{{ answer.rating }}</span>
+                    <button type="button" class="btn btn-outline-secondary" title="Не нравится">−</button>
+                </div>
+            </div>
+            <div class="col-12 col-sm">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
+                    {% if answer.is_correct %}
+                        <span class="badge text-bg-success">✓ Правильный ответ</span>
+                    {% else %}
+                        <span class="text-muted small fw-semibold">{{ answer.author }}</span>
+                    {% endif %}
+                    <span class="text-muted small">Ответил: {{ answer.created_at }}</span>
+                </div>
+                <p class="card-text mb-3">{{ answer.text }}</p>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="correctAnswer{{ answer.id }}" {% if answer.is_correct %}checked{% endif %}>
+                    <label class="form-check-label {% if answer.is_correct %}fw-semibold text-success{% else %}text-secondary{% endif %}" for="correctAnswer{{ answer.id }}">
+                        {% if answer.is_correct %}Отмечено как правильное решение{% else %}Отметить ответ как правильный{% endif %}
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>

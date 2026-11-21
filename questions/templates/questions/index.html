@@ -1,0 +1,18 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Новые вопросы — Voprosik{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap align-items-baseline gap-3 mb-4">
+    <h1 class="h3 mb-0">Новые вопросы</h1>
+    <a href="{% url 'hot' %}" class="fs-5 text-decoration-none">Популярные вопросы</a>
+</div>
+
+{% for question in page_obj %}
+    {% include 'includes/question_card.html' %}
+{% empty %}
+    <div class="alert alert-info">Вопросов пока нет.</div>
+{% endfor %}
+
+{% include 'includes/paginator.html' %}
+{% endblock %}
