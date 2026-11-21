@@ -1,0 +1,44 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Новый вопрос — Voprosik{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-body p-4">
+        <h1 class="h3 mb-4">Новый вопрос</h1>
+
+        <form action="{% url 'index' %}" method="post" novalidate>
+            {% csrf_token %}
+            <div class="row mb-3">
+                <label for="questionTitle" class="col-sm-3 col-form-label fw-semibold">Заголовок</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="questionTitle" maxlength="120" placeholder="Сформулируйте суть вопроса в одном предложении" required>
+                    <div class="form-text">Максимальная длина заголовка — 120 символов.</div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="questionBody" class="col-sm-3 col-form-label fw-semibold">Текст вопроса</label>
+                <div class="col-sm-9">
+                    <textarea class="form-control" id="questionBody" rows="7" maxlength="10000" placeholder="Опишите проблему подробно..." required></textarea>
+                    <div class="form-text">Минимум 30 символов, максимум 10 000 символов.</div>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <label for="questionTags" class="col-sm-3 col-form-label fw-semibold">Теги</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="questionTags" maxlength="60" placeholder="Например: поиск_ошибки, теория, оффтоп" required>
+                    <div class="form-text">Укажите до 3 ключевых тегов через запятую.</div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-9 offset-sm-3">
+                    <button type="submit" class="btn btn-primary px-4">Опубликовать вопрос</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

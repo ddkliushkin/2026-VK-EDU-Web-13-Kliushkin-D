@@ -1,0 +1,64 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}{{ question.title }} — Voprosik{% endblock %}
+
+{% block content %}
+<article class="card mb-4 border-primary shadow-sm">
+    <div class="card-body p-4">
+        <div class="row g-3">
+            <div class="col-12 col-sm-auto d-flex flex-sm-column align-items-center justify-content-between justify-content-sm-start gap-2 vote-box">
+                <img src="{% static 'core/img/avatar.svg' %}" alt="Аватар автора вопроса" class="avatar-lg border">
+                <div class="btn-group btn-group-sm" role="group" aria-label="Рейтинг вопроса">
+                    <button type="button" class="btn btn-success active" title="Нравится">+</button>
+                    <span class="btn btn-light border disabled fw-bold text-success">{{ question.rating }}</span>
+                    <button type="button" class="btn btn-outline-secondary" title="Не нравится">−</button>
+                </div>
+            </div>
+            <div class="col-12 col-sm">
+                <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-2">
+                    <h1 class="h4 mb-0">{{ question.title }}</h1>
+                    <span class="text-muted small text-nowrap">Создан: {{ question.created_at }}</span>
+                </div>
+                <p class="card-text mb-3">{{ question.text }}</p>
+                <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 pt-2 border-top">
+                    <span class="fw-semibold text-secondary">Всего ответов: {{ page_obj.paginator.count }}</span>
+                    <div class="d-flex flex-wrap align-items-center gap-1">
+                        <span class="text-muted small me-1">Теги:</span>
+                        {% for t in question.tags %}
+                            <a href="{% url 'tag' t %}" class="badge text-bg-secondary text-decoration-none">#{{ t }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+
+<h2 class="h5 mb-3" id="answers">Ответы ({{ page_obj.paginator.count }})</h2>
+
+{% for answer in page_obj %}
+    {% include 'includes/answer_card.html' %}
+{% empty %}
+    <div class="alert alert-info">Ответов пока нет.</div>
+{% endfor %}
+
+{% include 'includes/paginator.html' %}
+
+<hr class="my-4">
+
+<section class="card shadow-sm">
+    <div class="card-body p-4">
+        <h3 class="h5 mb-3">Ваш ответ</h3>
+        <form action="{% url 'question' question.id %}" method="post" novalidate>
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="answerText" class="form-label visually-hidden">Текст ответа</label>
+                <textarea class="form-control" id="answerText" rows="5" maxlength="5000" placeholder="Напишите подробный и развернутый ответ на вопрос..." required></textarea>
+                <div class="form-text">Поддерживается форматирование кода. Максимальная длина ответа — 5000 символов.</div>
+            </div>
+            <button type="submit" class="btn btn-primary px-4">Отправить ответ</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

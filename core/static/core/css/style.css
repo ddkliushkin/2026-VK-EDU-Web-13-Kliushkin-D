@@ -1,0 +1,48 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #f8f9fa;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.avatar-sm {
+    width: 44px;
+    height: 44px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.avatar-lg {
+    width: 84px;
+    height: 84px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.avatar-profile {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.vote-box {
+    min-width: 84px;
+}
+
+.question-card, .answer-card {
+    transition: box-shadow 0.15s ease-in-out;
+}
+
+.question-card:hover {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .06);
+}
+
+.answer-correct {
+    border-color: #198754 !important;
+    background-color: #f4fbf7;
+}

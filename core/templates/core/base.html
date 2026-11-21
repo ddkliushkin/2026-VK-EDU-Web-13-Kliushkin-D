@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Voprosik — Сервис вопросов и ответов{% endblock %}</title>
+    <link rel="icon" type="image/svg+xml" href="{% static 'core/img/favicon.svg' %}">
+    <link rel="stylesheet" href="{% static 'core/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+</head>
+<body>
+
+    <header class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-2">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-4 me-4" href="{% url 'index' %}">Voprosik</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Переключить навигацию">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse gap-3 mt-2 mt-lg-0" id="navbarContent">
+                <form class="d-flex flex-grow-1 my-2 my-lg-0" role="search" action="{% url 'index' %}" method="get">
+                    <input class="form-control me-2" type="search" placeholder="Поиск по вопросам и тегам..." aria-label="Search">
+                    <button class="btn btn-outline-light me-2" type="submit">Найти</button>
+                    <a href="{% url 'ask' %}" class="btn btn-success text-nowrap">Задать вопрос</a>
+                </form>
+
+                {% block userblock %}
+                <div class="d-flex align-items-center gap-2 ms-lg-3 py-2 py-lg-0">
+                    <a href="{% url 'login' %}" class="btn btn-outline-info btn-sm">Войти</a>
+                    <a href="{% url 'signup' %}" class="btn btn-primary btn-sm">Регистрация</a>
+                </div>
+                {% endblock %}
+            </div>
+        </div>
+    </header>
+
+    <main class="container my-4">
+        <div class="row g-4">
+            <div class="col-12 col-lg-8">
+                {% block content %}{% endblock %}
+            </div>
+
+            <aside class="col-12 col-lg-4">
+                {% include 'includes/sidebar.html' %}
+            </aside>
+        </div>
+    </main>
+
+    <footer class="bg-dark text-secondary py-3 mt-auto border-top">
+        <div class="container d-flex flex-column flex-sm-row justify-content-between align-items-center small">
+            <span>&copy; 2026 Voprosik — Учебный проект VK Education</span>
+            <div class="d-flex gap-3 mt-2 mt-sm-0">
+                <a href="{% url 'index' %}" class="text-secondary text-decoration-none">Главная</a>
+                <a href="{% url 'ask' %}" class="text-secondary text-decoration-none">Задать вопрос</a>
+                <a href="{% url 'profile' %}" class="text-secondary text-decoration-none">Профиль</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'core/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Тег: #{{ tag_name }} — Voprosik{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap align-items-baseline gap-3 mb-4">
+    <h1 class="h3 mb-0">Тег: <span class="text-primary">#{{ tag_name }}</span></h1>
+    <a href="{% url 'index' %}" class="small text-decoration-none">Все вопросы</a>
+</div>
+
+{% for question in page_obj %}
+    {% include 'includes/question_card.html' %}
+{% empty %}
+    <div class="alert alert-warning">По тегу <strong>#{{ tag_name }}</strong> вопросов не найдено.</div>
+{% endfor %}
+
+{% include 'includes/paginator.html' %}
+{% endblock %}

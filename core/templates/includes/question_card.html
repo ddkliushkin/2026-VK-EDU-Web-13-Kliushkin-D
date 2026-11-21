@@ -1,0 +1,35 @@
+{% load static %}
+<article class="card question-card mb-3 shadow-sm">
+    <div class="card-body">
+        <div class="row g-3">
+            <div class="col-12 col-sm-auto d-flex flex-sm-column align-items-center justify-content-between justify-content-sm-start gap-2 vote-box">
+                <img src="{% static 'core/img/avatar.svg' %}" alt="Аватар автора" class="avatar-lg border">
+                <div class="btn-group btn-group-sm" role="group" aria-label="Рейтинг вопроса">
+                    <button type="button" class="btn {% if question.rating > 10 %}btn-success active{% else %}btn-outline-secondary{% endif %}" title="Нравится">+</button>
+                    <span class="btn btn-light border disabled fw-bold {% if question.rating > 10 %}text-success{% elif question.rating < 0 %}text-danger{% else %}text-dark{% endif %}">
+                        {{ question.rating }}
+                    </span>
+                    <button type="button" class="btn {% if question.rating < 0 %}btn-danger active{% else %}btn-outline-secondary{% endif %}" title="Не нравится">−</button>
+                </div>
+            </div>
+            <div class="col-12 col-sm">
+                <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-2">
+                    <h2 class="h5 mb-0">
+                        <a href="{% url 'question' question.id %}" class="text-decoration-none">{{ question.title }}</a>
+                    </h2>
+                    <span class="text-muted small text-nowrap">{{ question.created_at }}</span>
+                </div>
+                <p class="card-text text-secondary mb-3">{{ question.text }}</p>
+                <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
+                    <a href="{% url 'question' question.id %}#answers" class="fw-semibold text-decoration-none">Ответов ({{ question.answers_count }})</a>
+                    <div class="d-flex flex-wrap align-items-center gap-1">
+                        <span class="text-muted small me-1">Теги:</span>
+                        {% for t in question.tags %}
+                            <a href="{% url 'tag' t %}" class="badge text-bg-secondary text-decoration-none">#{{ t }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
