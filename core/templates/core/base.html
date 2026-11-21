@@ -23,20 +23,48 @@
                 <form class="d-flex flex-grow-1 my-2 my-lg-0" role="search" action="{% url 'index' %}" method="get">
                     <input class="form-control me-2" type="search" placeholder="Поиск по вопросам и тегам..." aria-label="Search">
                     <button class="btn btn-outline-light me-2" type="submit">Найти</button>
-                    <a href="{% url 'ask' %}" class="btn btn-success text-nowrap">Задать вопрос</a>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'ask' %}" class="btn btn-success text-nowrap">Задать вопрос</a>
+                    {% else %}
+                        <span class="d-inline-block" title="Войдите, чтобы задать вопрос">
+                            <button type="button" class="btn btn-success text-nowrap" disabled>Задать вопрос</button>
+                        </span>
+                    {% endif %}
                 </form>
 
                 {% block userblock %}
-                <div class="d-flex align-items-center gap-2 ms-lg-3 py-2 py-lg-0">
-                    <a href="{% url 'login' %}" class="btn btn-outline-info btn-sm">Войти</a>
-                    <a href="{% url 'signup' %}" class="btn btn-primary btn-sm">Регистрация</a>
-                </div>
+                {% if user.is_authenticated %}
+                    <div class="d-flex align-items-center gap-3 ms-lg-3 py-2 py-lg-0 text-light">
+                        {% if user.profile.avatar %}
+                            <img src="{{ user.profile.avatar.url }}" alt="Аватар {{ user.username }}" class="avatar-sm border border-secondary">
+                        {% else %}
+                            <img src="{% static 'core/img/avatar.svg' %}" alt="Аватар {{ user.username }}" class="avatar-sm border border-secondary">
+                        {% endif %}
+                        <div class="d-flex flex-column lh-sm">
+                            <span class="fw-semibold">{{ user.profile.display_name|default:user.username }}</span>
+                            <div class="d-flex gap-2 small mt-1 align-items-center">
+                                <a href="{% url 'profile' %}" class="link-info text-decoration-none">Настройки</a>
+                                <form action="{% url 'logout' %}" method="post" class="d-inline m-0 p-0">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                                    <button type="submit" class="btn btn-link link-secondary text-decoration-none p-0 small align-baseline">Выйти</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="d-flex align-items-center gap-2 ms-lg-3 py-2 py-lg-0">
+                        <a href="{% url 'login' %}?next={{ request.get_full_path|urlencode }}" class="btn btn-outline-info btn-sm">Войти</a>
+                        <a href="{% url 'signup' %}" class="btn btn-primary btn-sm">Регистрация</a>
+                    </div>
+                {% endif %}
                 {% endblock %}
             </div>
         </div>
     </header>
 
     <main class="container my-4">
+        <div id="ajax-alert-container"></div>
         <div class="row g-4">
             <div class="col-12 col-lg-8">
                 {% block content %}{% endblock %}
@@ -53,12 +81,17 @@
             <span>&copy; 2026 Voprosik — Учебный проект VK Education</span>
             <div class="d-flex gap-3 mt-2 mt-sm-0">
                 <a href="{% url 'index' %}" class="text-secondary text-decoration-none">Главная</a>
-                <a href="{% url 'ask' %}" class="text-secondary text-decoration-none">Задать вопрос</a>
-                <a href="{% url 'profile' %}" class="text-secondary text-decoration-none">Профиль</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'ask' %}" class="text-secondary text-decoration-none">Задать вопрос</a>
+                    <a href="{% url 'profile' %}" class="text-secondary text-decoration-none">Профиль</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="text-secondary text-decoration-none">Войти</a>
+                {% endif %}
             </div>
         </div>
     </footer>
 
     <script src="{% static 'core/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'core/js/main.js' %}"></script>
 </body>
 </html>

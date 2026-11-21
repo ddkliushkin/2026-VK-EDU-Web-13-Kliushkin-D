@@ -7,55 +7,28 @@
     <div class="card-body p-4">
         <h1 class="h3 mb-4">Регистрация нового пользователя</h1>
 
-        <form action="{% url 'index' %}" method="post" enctype="multipart/form-data" novalidate style="max-width: 600px;">
+        {% if form.errors %}
+            <div class="alert alert-danger" role="alert">
+                Пожалуйста, исправьте ошибки в форме регистрации перед отправкой.
+            </div>
+        {% endif %}
+
+        <form action="{% url 'signup' %}" method="post" enctype="multipart/form-data" novalidate style="max-width: 600px;">
             {% csrf_token %}
-            <div class="row mb-3">
-                <label for="regLogin" class="col-sm-4 col-form-label fw-semibold">Логин</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" id="regLogin" maxlength="32" required>
-                    <div class="form-text">От 3 до 32 символов (латинские буквы, цифры и символ подчеркивания).</div>
-                </div>
-            </div>
 
-            <div class="row mb-3">
-                <label for="regEmail" class="col-sm-4 col-form-label fw-semibold">Email</label>
-                <div class="col-sm-8">
-                    <input type="email" class="form-control" id="regEmail" maxlength="100" required>
+            {% for field in form %}
+                <div class="row mb-3">
+                    <label for="{{ field.id_for_label }}" class="col-sm-4 col-form-label fw-semibold">{{ field.label }}</label>
+                    <div class="col-sm-8">
+                        {{ field }}
+                        {% for error in field.errors %}
+                            <div class="text-danger small mt-1">{{ error }}</div>
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
+            {% endfor %}
 
-            <div class="row mb-3">
-                <label for="regNick" class="col-sm-4 col-form-label fw-semibold">Отображаемое имя</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" id="regNick" maxlength="50" placeholder="Как вас будут видеть другие участники" required>
-                    <div class="form-text">До 50 символов.</div>
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label for="regPass" class="col-sm-4 col-form-label fw-semibold">Пароль</label>
-                <div class="col-sm-8">
-                    <input type="password" class="form-control" id="regPass" minlength="8" maxlength="64" placeholder="Минимум 8 символов" required>
-                    <div class="form-text">Используйте не менее 8 символов, включая буквы и цифры.</div>
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label for="regPassConfirm" class="col-sm-4 col-form-label fw-semibold">Повторите пароль</label>
-                <div class="col-sm-8">
-                    <input type="password" class="form-control" id="regPassConfirm" minlength="8" maxlength="64" placeholder="Повторите введенный пароль" required>
-                </div>
-            </div>
-
-            <div class="row mb-4">
-                <label for="regAvatar" class="col-sm-4 col-form-label fw-semibold">Аватар</label>
-                <div class="col-sm-8">
-                    <input class="form-control" type="file" id="regAvatar" accept="image/png, image/jpeg, image/webp">
-                    <div class="form-text">Поддерживаются форматы JPG, PNG, WebP размером до 2 МБ.</div>
-                </div>
-            </div>
-
-            <div class="row">
+            <div class="row mt-4">
                 <div class="col-sm-8 offset-sm-4 d-flex flex-column gap-3">
                     <div>
                         <button type="submit" class="btn btn-primary px-4">Зарегистрироваться</button>

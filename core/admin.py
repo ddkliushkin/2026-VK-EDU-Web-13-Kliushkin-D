@@ -22,8 +22,8 @@ admin.site.register(User, UserAdmin)
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'avatar')
-    search_fields = ('user__username', 'user__email')
+    list_display = ('id', 'user', 'nickname', 'avatar')
+    search_fields = ('user__username', 'user__email', 'nickname')
     list_filter = ('user__is_active', 'user__is_staff')
     raw_id_fields = ('user',)
     list_select_related = ('user',)

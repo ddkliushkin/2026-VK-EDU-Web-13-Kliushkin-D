@@ -1,5 +1,5 @@
 {% load static %}
-<article class="card answer-card {% if answer.is_correct %}answer-correct{% endif %} mb-3 shadow-sm">
+<article id="answer-{{ answer.id }}" class="card answer-card {% if answer.is_correct %}answer-correct{% endif %} mb-3 shadow-sm">
     <div class="card-body">
         <div class="row g-3">
             <div class="col-12 col-sm-auto d-flex flex-sm-column align-items-center justify-content-between justify-content-sm-start gap-2 vote-box">
@@ -8,28 +8,42 @@
                 {% else %}
                     <img src="{% static 'core/img/avatar.svg' %}" alt="Аватар {{ answer.author.username }}" class="avatar-lg border">
                 {% endif %}
-                <div class="btn-group btn-group-sm" role="group" aria-label="Рейтинг ответа">
-                    <button type="button" class="btn {% if answer.is_correct %}btn-success active{% else %}btn-outline-secondary{% endif %}" title="Нравится">+</button>
-                    <span class="btn btn-light border disabled fw-bold {% if answer.is_correct %}text-success{% else %}text-dark{% endif %}">{{ answer.rating }}</span>
-                    <button type="button" class="btn btn-outline-secondary" title="Не нравится">−</button>
+                <div class="btn-group btn-group-sm vote-controls" data-url="{% url 'vote_answer' answer.id %}" role="group" aria-label="Рейтинг ответа">
+                    <button type="button"
+                            class="btn vote-btn {% if answer.user_vote == 1 %}btn-success active{% else %}btn-outline-secondary{% endif %}"
+                            data-vote="like"
+                            {% if not user.is_authenticated %}disabled title="Войдите, чтобы голосовать"{% elif answer.user_vote == 1 %}title="Убрать лайк"{% else %}title="Нравится"{% endif %}>+</button>
+                    <span class="btn btn-light border disabled fw-bold vote-rating {% if answer.rating > 0 %}text-success{% elif answer.rating < 0 %}text-danger{% else %}text-dark{% endif %}">
+                        {{ answer.rating }}
+                    </span>
+                    <button type="button"
+                            class="btn vote-btn {% if answer.user_vote == -1 %}btn-danger active{% else %}btn-outline-secondary{% endif %}"
+                            data-vote="dislike"
+                            {% if not user.is_authenticated %}disabled title="Войдите, чтобы голосовать"{% elif answer.user_vote == -1 %}title="Убрать дизлайк"{% else %}title="Не нравится"{% endif %}>−</button>
                 </div>
             </div>
             <div class="col-12 col-sm">
                 <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
-                    {% if answer.is_correct %}
-                        <span class="badge text-bg-success">✓ Правильный ответ</span>
-                    {% else %}
-                        <span class="text-muted small fw-semibold">{{ answer.author.username }}</span>
-                    {% endif %}
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="badge text-bg-success correct-badge {% if not answer.is_correct %}d-none{% endif %}">✓ Правильный ответ</span>
+                        <span class="text-muted small fw-semibold">{{ answer.author.profile.display_name|default:answer.author.username }}</span>
+                    </div>
                     <span class="text-muted small">Ответил: {{ answer.created_at|date:"d.m.Y H:i" }}</span>
                 </div>
                 <p class="card-text mb-3">{{ answer.text }}</p>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="correctAnswer{{ answer.id }}" {% if answer.is_correct %}checked{% endif %}>
-                    <label class="form-check-label {% if answer.is_correct %}fw-semibold text-success{% else %}text-secondary{% endif %}" for="correctAnswer{{ answer.id }}">
-                        {% if answer.is_correct %}Отмечено как правильное решение{% else %}Отметить ответ как правильный{% endif %}
-                    </label>
-                </div>
+                {% if user.is_authenticated and user.id == question.author_id %}
+                    <div class="form-check">
+                        <input class="form-check-input correct-checkbox"
+                               type="checkbox"
+                               id="correctAnswer{{ answer.id }}"
+                               data-url="{% url 'mark_correct' question.id %}"
+                               data-answer-id="{{ answer.id }}"
+                               {% if answer.is_correct %}checked{% endif %}>
+                        <label class="form-check-label correct-label {% if answer.is_correct %}fw-semibold text-success{% else %}text-secondary{% endif %}" for="correctAnswer{{ answer.id }}">
+                            {% if answer.is_correct %}Отмечено как правильное решение{% else %}Отметить ответ как правильный{% endif %}
+                        </label>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

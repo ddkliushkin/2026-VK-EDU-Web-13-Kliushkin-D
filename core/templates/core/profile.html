@@ -1,59 +1,70 @@
 {% extends 'core/base.html' %}
 {% load static %}
 
-{% block title %}Настройки профиля: XenoBlast — Voprosik{% endblock %}
-
-{% block userblock %}
-<div class="d-flex align-items-center gap-3 ms-lg-3 py-2 py-lg-0 text-light">
-    <img src="{% static 'core/img/avatar.svg' %}" alt="Аватар XenoBlast" class="avatar-sm border border-secondary">
-    <div class="d-flex flex-column lh-sm">
-        <span class="fw-semibold">XenoBlast</span>
-        <div class="d-flex gap-2 small mt-1">
-            <a href="{% url 'profile' %}" class="link-info text-decoration-none">Настройки</a>
-            <a href="{% url 'login' %}" class="link-secondary text-decoration-none">Выйти</a>
-        </div>
-    </div>
-</div>
-{% endblock %}
+{% block title %}Настройки профиля: {{ user.username }} — Voprosik{% endblock %}
 
 {% block content %}
 <div class="card shadow-sm">
     <div class="card-body p-4">
-        <h1 class="h3 mb-4">Настройки профиля: <span class="text-primary">XenoBlast</span></h1>
+        <h1 class="h3 mb-4">Настройки профиля: <span class="text-primary">{{ user.username }}</span></h1>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        {% if form.errors %}
+            <div class="alert alert-danger" role="alert">
+                Не удалось сохранить изменения. Проверьте поля ниже.
+            </div>
+        {% endif %}
 
         <form action="{% url 'profile' %}" method="post" enctype="multipart/form-data" novalidate style="max-width: 600px;">
             {% csrf_token %}
+
             <div class="row mb-3">
-                <label for="profLogin" class="col-sm-4 col-form-label fw-semibold">Логин</label>
+                <label class="col-sm-4 col-form-label fw-semibold">Логин</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" id="profLogin" maxlength="32" value="XenoBlast" required>
-                    <div class="form-text">Ваш уникальный идентификатор для входа (до 32 символов).</div>
+                    <input type="text" class="form-control" value="{{ user.username }}" disabled>
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label for="profEmail" class="col-sm-4 col-form-label fw-semibold">Email</label>
+                <label for="{{ form.email.id_for_label }}" class="col-sm-4 col-form-label fw-semibold">Email</label>
                 <div class="col-sm-8">
-                    <input type="email" class="form-control" id="profEmail" maxlength="100" value="XenoBlast@gmail.com" required>
+                    {{ form.email }}
+                    {% for error in form.email.errors %}
+                        <div class="text-danger small mt-1">{{ error }}</div>
+                    {% endfor %}
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label for="profNick" class="col-sm-4 col-form-label fw-semibold">Никнейм</label>
+                <label for="{{ form.nickname.id_for_label }}" class="col-sm-4 col-form-label fw-semibold">Никнейм</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" id="profNick" maxlength="50" value="XenoBlast" required>
-                    <div class="form-text">Отображается рядом с вашими вопросами и ответами.</div>
+                    {{ form.nickname }}
+                    {% for error in form.nickname.errors %}
+                        <div class="text-danger small mt-1">{{ error }}</div>
+                    {% endfor %}
                 </div>
             </div>
 
             <div class="row mb-4">
-                <label for="profAvatar" class="col-sm-4 col-form-label fw-semibold">Аватар</label>
+                <label for="{{ form.avatar.id_for_label }}" class="col-sm-4 col-form-label fw-semibold">Аватар</label>
                 <div class="col-sm-8">
                     <div class="mb-3">
-                        <img src="{% static 'core/img/avatar.svg' %}" alt="Текущий аватар пользователя" class="avatar-profile border shadow-sm">
+                        {% if profile.avatar %}
+                            <img src="{{ profile.avatar.url }}" alt="Текущий аватар" class="avatar-profile border shadow-sm">
+                        {% else %}
+                            <img src="{% static 'core/img/avatar.svg' %}" alt="Аватар по умолчанию" class="avatar-profile border shadow-sm">
+                        {% endif %}
                     </div>
-                    <input class="form-control" type="file" id="profAvatar" accept="image/png, image/jpeg, image/webp">
-                    <div class="form-text">Загрузите новое изображение (JPG, PNG, WebP до 2 МБ), чтобы сменить аватар.</div>
+                    {{ form.avatar }}
+                    {% for error in form.avatar.errors %}
+                        <div class="text-danger small mt-1">{{ error }}</div>
+                    {% endfor %}
+                    <div class="form-text">JPG, PNG, WebP размером до 2 МБ.</div>
                 </div>
             </div>
 

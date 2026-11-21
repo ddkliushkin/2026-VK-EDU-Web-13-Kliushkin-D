@@ -7,21 +7,35 @@
     <div class="card-body p-4">
         <h1 class="h3 mb-4">Вход</h1>
 
-        <form action="{% url 'index' %}" method="post" novalidate style="max-width: 540px;">
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger" role="alert">
+                {% for error in form.non_field_errors %}
+                    <div>{{ error }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form action="{% url 'login' %}" method="post" novalidate style="max-width: 540px;">
             {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}">
+
             <div class="row mb-3">
-                <label for="loginInput" class="col-sm-4 col-form-label fw-semibold">Логин или Email</label>
+                <label for="{{ form.username.id_for_label }}" class="col-sm-4 col-form-label fw-semibold">Логин</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" id="loginInput" maxlength="64" placeholder="Введите ваш логин" required>
-                    <div class="form-text">До 64 символов (латиница, цифры или email).</div>
+                    {{ form.username }}
+                    {% for error in form.username.errors %}
+                        <div class="text-danger small mt-1">{{ error }}</div>
+                    {% endfor %}
                 </div>
             </div>
 
             <div class="row mb-4">
-                <label for="passwordInput" class="col-sm-4 col-form-label fw-semibold">Пароль</label>
+                <label for="{{ form.password.id_for_label }}" class="col-sm-4 col-form-label fw-semibold">Пароль</label>
                 <div class="col-sm-8">
-                    <input type="password" class="form-control" id="passwordInput" maxlength="64" placeholder="••••••••" required>
-                    <div class="form-text">Пароль чувствителен к регистру символов.</div>
+                    {{ form.password }}
+                    {% for error in form.password.errors %}
+                        <div class="text-danger small mt-1">{{ error }}</div>
+                    {% endfor %}
                 </div>
             </div>
 
